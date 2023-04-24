@@ -1,13 +1,12 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#ifndef MAIN_H
+#define MAIN_H
 #include <stdarg.h>
-
-char *string_rev(char *string);
-char *_itoa(int a, char *stringout, int base);
 int _printf(const char *format, ...);
-
+char * _itoa(int i, char *strout, int base);
+char *_strcpy(char *dest, char *src);
+char *str_rev (char *str);
+int _strlen(char *s);
+int handle_format_specifier(char specifier, va_list args, char *buffer, int *j);
 #endif
+
+
