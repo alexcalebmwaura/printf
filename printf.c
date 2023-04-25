@@ -24,7 +24,8 @@ int _printf(const char *format, ...)
 		{
 			i++;
 			if (format[i] == 'i' || format[i] == 'd'
-					|| format[i] == 'o' || format[i] == 's')
+					|| format[i] == 'o' || format[i] == 'S'
+					|| format[i] == 's')
 				handle_format(format[i], args, buffer, &j);
 			else
 				handle_format2(format[i], args, buffer, &j);

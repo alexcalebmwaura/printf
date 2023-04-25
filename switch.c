@@ -30,10 +30,31 @@ int handle_format(char specify, va_list args, char *buffer, int *j)
 				_strcpy(&buffer[*j], tmp);
 				*j += _strlen(tmp);
 				break;
+		case 'S':
 		case 's':
 				str = va_arg(args, char *);
-				_strcpy(&buffer[*j], str);
-				*j += _strlen(str);
+				while (*str != '\0')
+				{
+					if (*str < 32 || *str >= 127)
+					{
+						_strcpy(&buffer[*j], "\\x0");
+						(*j) += 3;
+						_itoa(*str, tmp, 16);
+						if (_strlen(tmp) == '1')
+						{
+							buffer[*j] = '0';
+							(*j)++;
+						}
+						_strcpy(&buffer[*j], tmp);
+						(*j) += _strlen(tmp);
+					}
+					else
+					{
+						buffer[*j] =  *str;
+						(*j)++;
+					}
+					str++;
+				}
 				break;
 	}
 	free(tmp);
