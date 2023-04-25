@@ -13,7 +13,7 @@ char *string_rev(char *string)
 	char z;
 
 	if (!string)
-	
+	{
 		return (NULL);
 	}
 	while (string[length] != '\0')
@@ -40,7 +40,8 @@ char *string_rev(char *string)
 char *_itoa(int a, char *stringout, int base)
 {
 	char *string = stringout;
-	int dig, sig = 0;
+	int dig;
+	int sig = 0;
 
 	if (a < 0)
 	{
