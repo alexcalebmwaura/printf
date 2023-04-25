@@ -103,7 +103,14 @@ char *_itoa(long int i, char *strout, int base)
 	char *strr = strout;
 	int digit;
 	int sign = 0;
+	int k = 0;
 
+	if (i == 0)
+	{
+		strout[k++] = '0';
+		strout[k] = '\0';
+		return (strout);
+	}
 	if (i < 0)
 	{
 		sign = 1;
@@ -136,7 +143,13 @@ char *itoa_(long int i, char *strout, int base)
 	char *strr = strout;
 	int digit;
 	int sign = 0;
+	int j = 0;
 
+	if (i == 0)
+	{
+		strout[k++] = '0';
+		strout[i] = '\0';
+	}
 	if (i < 0)
 	{
 		sign = 1;
