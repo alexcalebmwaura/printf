@@ -1,5 +1,68 @@
 #include "main.h"
 /**
+ * string_rev - Reverse a string
+ *
+ * @string: Input stiring
+ *
+ * Return: The reverse of a string
+ */
+char *string_rev(char *string)
+{
+	int a;
+	int length = 0;
+	char z;
+
+	if (!string)
+	
+		return (NULL);
+	}
+	while (string[length] != '\0')
+	{
+		length++;
+	}
+	for (a = 0; a < (length / 2); a++)
+	{
+		z = string[a];
+		string[a] = string[length - a - 1];
+		string[length - a - 1] = z;
+	}
+	return (string);
+}
+/**
+ * _itoa - Converts argument integer to string
+ *
+ * @a: Integer
+ * @stringout: String
+ * @base: Base
+ *
+ * Return: String
+ */
+char *_itoa(int a, char *stringout, int base)
+{
+	char *string = stringout;
+	int dig, sig = 0;
+
+	if (a < 0)
+	{
+		sig = 1;
+		a *= -1;
+	}
+	while (a)
+	{
+		dig = a % base;
+		*string = (dig > a) ? ('A' + dig - 10) : '0' + dig;
+		a = a / base;
+		string++;
+	}
+	if (sig)
+	{
+		*string++ = '-';
+	}
+	*string++ = '\0';
+	string_rev(stringout);
+	return (stringout);
+}
+/**
  * _printf - function that produces output according to a format
  *
  * @format:  is a character string
@@ -9,51 +72,56 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int a = 0;
-	int number_of_chars_printed = 0;
-	char buf[1024];
+	int a = 0, b = 0;
+	char *string;
+	char buff[100] = {0};
+	char tmp[20];
 
 	va_start(args, format);
-	while (*format != '\0')
+	while (format && format[a])
 	{
-		if (*format == '%')
+		if (format[a] == '%')
 		{
-			format++;
-            		switch (*format)
+			a++;
+			switch (format[a])
 			{
 				case 'c':
 					{
-						int z = va_arg(args, int);
-						buf[a++] = z;
-						number_of_chars_printed++;
+						buff[b] = (char)va_arg(args, int);
+						b++;
+						break;
 					}
-					break;
 				case 's':
 					{
-						char *s = va_arg(args, char*);
-
-						while (*s != '\0')
-						{
-							buf[a++] = *s;
-							s++;
-							number_of_chars_printed++;
-						}
+						string = va_arg(args, char*);
+						strcpy(&buff[b], string);
+						b += strlen(string);
+						break;
 					}
-					break;
-				case '%':
-					buf[a++] = '%';
-					number_of_chars_printed++;
-					break;
+				case 'd':
+					{
+						_itoa(va_arg(args, int), tmp, 10);
+						strcpy(&buff[b], tmp);
+						b += strlen(tmp);
+						break;
+					}
+				case 'i':
+					{
+						_itoa(va_arg(args, int), tmp, 10);
+						strcpy(&buff[b], tmp);
+						b += strlen(tmp);
+						break;
+					}
 			}
 		}
 		else
 		{
-			buf[a++] = *format;
-			number_of_chars_printed++;
+			buff[b] = string[a];
+			b++;
 		}
-		format++;
+		a++;
 	}
+	fwrite(buff, b, 1, stdout);
 	va_end(args);
-	fwrite(buf, sizeof(char), a, stdout);
-	return (number_of_chars_printed);
+	return (b);
 }
