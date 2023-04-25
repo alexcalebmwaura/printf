@@ -13,7 +13,7 @@ char *string_rev(char *string)
 	char z;
 
 	if (!string)
-	{
+	
 		return (NULL);
 	}
 	while (string[length] != '\0')
