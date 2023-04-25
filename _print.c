@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h>
 /**
  * string_rev - Reverse a string
  *
@@ -75,9 +76,13 @@ int _printf(const char *format, ...)
 	va_list args;
 	int a = 0, b = 0;
 	char *string;
-	char buff[100] = {0};
+	char buff[1024] = {0};
 	char tmp[20];
 
+	if (format == NULL)
+	{
+		return (-1);
+	}
 	va_start(args, format);
 	while (format && format[a])
 	{
@@ -110,6 +115,27 @@ int _printf(const char *format, ...)
 					{
 						_itoa(va_arg(args, int), tmp, 10);
 						strcpy(&buff[b], tmp);
+						b += strlen(tmp);
+						break;
+					}
+				case 'o':
+					{
+					 	_itoa(va_arg(args, int), tmp, 8);
+					 	strcpy(&buff[b],tmp);
+					 	b += strlen(tmp);
+					 	break;
+					}
+				case 'x':
+					{
+						_itoa(va_arg(args, int), tmp ,16);
+						strcpy(&buff[b],tmp);
+						b += strlen(tmp);
+						break;
+					}
+				case 'X':
+					{
+						_itoa(va_arg(args, int), tmp ,16);
+						strcpy(&buff[b],tmp);
 						b += strlen(tmp);
 						break;
 					}
