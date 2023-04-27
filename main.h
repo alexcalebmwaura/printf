@@ -9,6 +9,7 @@ int _strlen(char *s);
 char *itoa_(long int i, char *strout, int base);
 int handle_format(char specifier, va_list args, char *buffer, int *j);
 int handle_format2(char specifier, va_list args, char *buffer, int *j);
+void *rot13(char *input, char *output);
 #endif
 
 

@@ -13,12 +13,18 @@
 int handle_format(char specify, va_list args, char *buffer, int *j)
 {
 	char *str;
-	char *tmp = (char *)malloc(100 * sizeof(char));
+	char *input;
+	char *tmp = (char *)malloc(1024 * sizeof(char));
 
 	if (tmp == NULL)
 		return (-1);
 	switch (specify)
 	{
+		case 'b':
+				_itoa(va_arg(args, int),tmp, 2);
+				_strcpy(&buffer[*j], tmp);
+				*j += _strlen(tmp);
+				break;
 		case 'd':
 		case 'i':
 				_itoa(va_arg(args, int), tmp, 10);
@@ -38,6 +44,12 @@ int handle_format(char specify, va_list args, char *buffer, int *j)
 					(*j)++;
 					str++;
 				}
+				break;
+		case 'R':
+				input = va_arg(args, char *);
+				rot13(input, tmp);
+				_strcpy(&buffer[*j], tmp);
+				*j += _strlen(tmp);
 				break;
 	}
 	free(tmp);
@@ -159,5 +171,32 @@ char *itoa_(long int i, char *strout, int base)
 	*strr = '\0';
 	str_rev(strout);
 	return (strout);
+}
+void *rot13(char *input, char *output)
+{
+
+	int i, j;
+	char str[52] = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
+	char str2[52] = "nNoOpPqQrRsStTuUvVwWxXyYzZaAbBcCdDeEfFgGhHiIjJkKlLmM";
+
+	i = 0;
+	while (input[i] != '\0')
+	{
+		if ((input[i] >= 'a' && input[i] <= 'z') || (input[i] >= 'A' && input[i] <= 'Z'))
+		{
+			j = 0;
+			while (input[i] != str[j] && j < 52)
+				j++;
+
+			output[i] = str2[j];
+		}
+		else
+		{
+			output[i] = input[i];
+		}
+		i++;
+	}
+	output[i] = '\0';
+	return (0);
 }
 
