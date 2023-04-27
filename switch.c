@@ -119,8 +119,10 @@ char *_itoa(long int i, char *strout, int base)
 	char *strr = strout;
 	int digit;
 	int sign = 0;
+	int len = 0;
+	int j;
 
-	if (i < 0)
+	if (i < 0 && base == 10)
 	{
 		sign = 1;
 		i *= -1;
@@ -137,6 +139,22 @@ char *_itoa(long int i, char *strout, int base)
 	}
 	*strr = '\0';
 	str_rev(strout);
+
+	if (sign && base != 10)
+	{
+		len = _strlen(strout);
+		for (j = 0; j < len; j++)
+		{
+			if (strout[j] == 1)
+			{
+				strout[j] = '0';
+			}
+			else if (strout[j] == '0')
+			{
+				strout[j] = '0';
+			}
+		}
+	}
 	return (strout);
 
 }
