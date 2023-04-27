@@ -68,6 +68,7 @@ int handle_format2(char specify, va_list args, char *buffer, int *j)
 	char *tmp2 = (char *)malloc(100 * sizeof(char));
 	char s = specify;
 	char *str;
+	char *reversed;
 
 	if (tmp2 == NULL)
 		return (-1);
@@ -76,6 +77,17 @@ int handle_format2(char specify, va_list args, char *buffer, int *j)
 		case 'c':
 			buffer[*j] = va_arg(args, int);
 			(*j)++;
+			break;
+		case 'r':
+			str = va_arg(args, char *);
+			_strcpy(tmp2, str);
+			reversed = str_rev(tmp2);
+			while(*reversed != '\0')
+			{
+				buffer[*j] = *reversed;
+				(*j)++;
+				reversed++;
+			}
 			break;
 		case 'X':
 			_itoa(va_arg(args, unsigned int), tmp2, 16);
@@ -216,6 +228,12 @@ char *itoa_(long int i, char *strout, int base)
 	str_rev(strout);
 	return (strout);
 }
+/**
+ * ront13 - function to turn a string to rot13
+ * @input: input string
+ * @output: output string
+ * Return: null
+ */
 void *rot13(char *input, char *output)
 {
 
@@ -243,4 +261,3 @@ void *rot13(char *input, char *output)
 	output[i] = '\0';
 	return (0);
 }
-
