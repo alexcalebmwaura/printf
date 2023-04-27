@@ -28,7 +28,7 @@ int _printf(const char *format, ...)
 					||format[i] == 'R' || format[i] == 's'
 					|| format[i] == 'b')
 				handle_format(format[i], args, buffer, &j);
-			else
+			else 
 				handle_format2(format[i], args, buffer, &j);
 		}
 		else if (format[i] == '\\')

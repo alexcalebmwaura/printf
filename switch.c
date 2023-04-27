@@ -67,6 +67,7 @@ int handle_format2(char specify, va_list args, char *buffer, int *j)
 {
 	char *tmp2 = (char *)malloc(100 * sizeof(char));
 	char s = specify;
+	char *str;
 
 	if (tmp2 == NULL)
 		return (-1);
@@ -97,6 +98,31 @@ int handle_format2(char specify, va_list args, char *buffer, int *j)
 			*j += 2;
 			_strcpy(&buffer[*j], tmp2);
 			*j += _strlen(tmp2);
+			break;
+		case 'S':
+			str = va_arg(args, char *);
+			while(*str != '\0')
+			{
+				if (*str < 32 || *str >= 127)
+				{
+					_strcpy(&buffer[*j], "\\x");
+					(*j) += 2;
+					_itoa(*str, tmp2, 16);
+					if(_strlen(tmp2) == 1)
+					{
+						buffer[*j] = '0';
+						(*j)++;
+					}
+					_strcpy(&buffer[*j], tmp2);
+					(*j) += _strlen(tmp2);
+				}
+				else
+				{
+					buffer[*j] = *str;
+					(*j)++;
+				}
+				str++;
+			}
 			break;
 		default:
 			_strcpy(&buffer[*j], &s);
